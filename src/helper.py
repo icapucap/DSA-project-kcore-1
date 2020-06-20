@@ -1,25 +1,18 @@
 class DegreeView():
-    def __init__(self, G, weight=None):
+    def __init__(self, G):
         self._graph = G
         self._succ =  G._adj
         self._pred =  G._adj
         self._nodes = self._succ 
-        self._weight = weight
+        
 
     def __iter__(self):
-        weight = self._weight
-        if weight is None:
-            for n in self._nodes:
-                succs = self._succ[n]
-                preds = self._pred[n]
-                yield (n, len(succs) + len(preds))
-        else:
-            for n in self._nodes:
-                succs = self._succ[n]
-                preds = self._pred[n]
-                deg = sum(dd.get(weight, 1) for dd in succs.values()) \
-                    + sum(dd.get(weight, 1) for dd in preds.values())
-                yield (n, deg)
+        
+        for n in self._nodes:
+            succs = self._succ[n]
+            preds = self._pred[n]
+            yield (n, len(succs) + len(preds))
+        
 
 def core_number(G):
     degrees = dict(G.degree())
